@@ -8,36 +8,43 @@ const getScore= (rolls)=> {
   let rollInd= 0;
   let frameStart= 0;
   for (let frame= 0; frame< 10; ++frame) {
-    console.log(frame, rollInd, frameStart, rolls[rollInd])
+    // console.log(frame, rollInd, frameStart, rolls[rollInd])
     if (rolls[frameStart]=== 10) {
       // strike
-      console.log('strike');
+      // console.log('strike');
       frameScores.push(10 + rolls[rollInd+1]+rolls[rollInd+2]) // no need tto handle index range errors here 
     } else {
       // buffer : spare or open
       let buff= framePinLimit - rolls[frameStart];
-      rollInd= ++frameStart;
+      rollInd= frameStart+1;
       if (rolls[rollInd]> buff) {
-        console.log(rolls[rollInd], buff)
+        // console.log(rolls[rollInd], buff)
         throw new Error('wrong input')
       }
       else if (rolls[rollInd]=== buff) {
         // spare
-        console.log('spare')
+        // console.log('spare')
         frameScores.push(10 + rolls[rollInd+1])
       }
       else {
         // open
-        console.log('open')
+        // console.log('open')
         frameScores.push(rolls[frameStart] + rolls[rollInd])
       }
     }
 
     rollInd++;
-    frameStart++;
-    console.log(frameScores)
+    frameStart= rollInd;
+    // console.log(frameScores)
   }
-  return frameScores.reduce((scr, curr)=> scr+curr);
+  // return frameScores.reduce((scr, curr)=> scr+curr);
+  let sum= 0;
+  let ind= 0;
+  while (!isNaN(frameScores[ind])) {
+    sum+= frameScores[ind];
+    ind++
+  }
+  return sum
 }
 
 const getBestScores= (games)=> {
@@ -46,7 +53,7 @@ const getBestScores= (games)=> {
 }
 
 
-console.log(getScore([10, 5, 5, 9, 0]))
+console.log(getScore([3, 6, 3, 6, 3, 6, 3, 6, 3, 6, 3, 6, 3, 6, 3, 6, 3, 6, 3, 6]))
 
 module.exports= {
   getBestScores,
