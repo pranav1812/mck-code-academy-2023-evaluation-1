@@ -1,5 +1,5 @@
 const getScore= (rolls)=> {
-  if (!Array.isArray(rolls) || rolls.some(roll=> typeof roll != 'number')) throw new Error('Invalid argument')
+  if (!Array.isArray(rolls) || rolls.some(roll=> typeof roll != 'number')) throw new Error('Invalid argument');
   // we have to return total score
   let framePinLimit= 10;
   // let frameBowlLimit= 2;
@@ -12,24 +12,24 @@ const getScore= (rolls)=> {
     if (rolls[frameStart]=== 10) {
       // strike
       // console.log('strike');
-      frameScores.push(10 + rolls[rollInd+1]+rolls[rollInd+2]) // no need tto handle index range errors here 
+      frameScores.push(10 + rolls[rollInd+1]+rolls[rollInd+2]); // no need tto handle index range errors here 
     } else {
       // buffer : spare or open
       let buff= framePinLimit - rolls[frameStart];
       rollInd= frameStart+1;
       if (rolls[rollInd]> buff) {
         // console.log(rolls[rollInd], buff)
-        throw new Error('wrong input')
+        throw new Error('wrong input');
       }
       else if (rolls[rollInd]=== buff) {
         // spare
         // console.log('spare')
-        frameScores.push(10 + rolls[rollInd+1])
+        frameScores.push(10 + rolls[rollInd+1]);
       }
       else {
         // open
         // console.log('open')
-        frameScores.push(rolls[frameStart] + rolls[rollInd])
+        frameScores.push(rolls[frameStart] + rolls[rollInd]);
       }
     }
 
@@ -42,20 +42,20 @@ const getScore= (rolls)=> {
   let ind= 0;
   while (!isNaN(frameScores[ind])) {
     sum+= frameScores[ind];
-    ind++
+    ind++;
   }
-  return sum
-}
+  return sum;
+};
 
 const getBestScores= (games)=> {
-  if (!Array.isArray(rolls) || games.some(game=> !Array.isArray(game)) ) throw new Error('Invalid argument')
+  if (!Array.isArray(games) || games.some(game=> !Array.isArray(game)) ) throw new Error('Invalid argument');
   return Math.max(...games.map(rolls=> getScore(rolls)));
-}
+};
 
 
-console.log(getScore([3, 6, 3, 6, 3, 6, 3, 6, 3, 6, 3, 6, 3, 6, 3, 6, 3, 6, 3, 6]))
+console.log(getScore([6, 4, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]));
 
 module.exports= {
   getBestScores,
   getScore
-}
+};
