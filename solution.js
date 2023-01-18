@@ -31,3 +31,8 @@ const getScore= (rolls)=> {
   }
   return frameScores
 }
+
+const getBestScores= (games)=> {
+  if (!Array.isArray(rolls) || games.some(game=> !Array.isArray(game)) ) throw new Error('Invalid argument')
+  return Math.max(...games.map(rolls=> getScore(rolls)));
+}
